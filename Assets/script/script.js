@@ -17,17 +17,27 @@ var currentHour = moment().format("h");
 currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
 var textAreaValue = [];
 var armyTime = 12;
+var row;
+var hourDiv;
+var textArea;
+var saveBtn;
+var icon;
+
+createElements();
+renderData();
+
 //this function creates, elements for each row in the schedule 
+function createElements(){
     for(var i =0; i < hoursList.length; i++){
        // console.log(hoursList);
-        var row = $('<div>').addClass('row').attr('data-index',i);//create each row
+        row = $('<div>').addClass('row').attr('data-index',i);//create each row
         timeBLock.append(row);//appendt o time block
         row.attr('data-index', hoursList[i]);
         //console.log(row.attr('data-index'));
-        var hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
-        var textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
-        var saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
-        var icon = $('<img>').attr('src', 'Assets/images/save.png').attr('data-index', i);
+        hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
+        textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
+        saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
+        icon = $('<img>').attr('src', 'Assets/images/save.png').attr('data-index', i);
         if(i < 3){//formats the the text from Am to Pm
             hourDiv.text(hoursList[i]+'AM');
             hourDiv.attr('data-index', hoursList[i]);
@@ -43,130 +53,60 @@ var armyTime = 12;
         textAreaElList.push({textAreaEl : $('#'+dataWords[i])}); 
         //console.log(saveBtn);
     }
-
-    
-    console.log(textAreaElList);
+}
     function savaInfo(event){
         event.preventDefault();
         console.log();
         var index =parseInt( $(event.target).attr('data-index'));//grab button dataindex and call a function to save text content matching data -index
         console.log(index);
-        switch(index){//when they hit the save button they will send the right text box text to save to local storage
-            case 0:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
-                break;
-            case 1:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
-                
-                //console.log(string);
-                break;
-            case 2:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
+        //when they hit the save button they will send the right text box text to save to local storage
 
-                //console.log(string);
-                break;
-            case 3:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
-
-                console.log(string);
-                break;
-            case 4:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
-
-                console.log(string);
-                break;
-            case 5:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
-
-                console.log(string);
-                break;
-            case 6:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
-
-                console.log(string);
-                break;
-            case 7:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                textAreaValue = saveData(textAreaValue);
-                renderData(textAreaValue);
-
-                break;
-            case 8:
-                var string = $(event.target.parentElement.children[1]).val();
-                var textareaId = textAreaElList[index].textAreaEl.attr('id');
-                textAreaValue.push({textareaId:textareaId, savedText:string})
-                renderData(textAreaValue);
-                textAreaValue = saveData(textAreaValue);
-                console.log(textAreaValue);
-                break;
-        }
+        var string = $(event.target.parentElement.children[1]).val();
+        var textareaId = textAreaElList[index].textAreaEl.attr('id');
+        textAreaValue.push({textareaId:textareaId, savedText:string})
+        textAreaValue = saveData(textAreaValue);
+        
+        console.log(textAreaValue);
 }
+
 function saveData(array){///this function takes the id of text area and the text that was saved and is stored in array of objects so latter i can fetch it from local storage
     localStorage.setItem("array", JSON.stringify(array));
-    array = JSON.parse(localStorage.getItem("array"));
     return array;
 }
 
 
-function renderData(array){
+function renderData(){
+    var array = JSON.parse(localStorage.getItem("array"));
     for(var i = 0; i < array.length;i++){
         switch(array[i].textareaId){
             case "zero":
-                textAreaElList[0].textAreaEl.text(array[i].savedText);
+                textAreaElList[0].textAreaEl.innerHTML = array[i].savedText;
+                //console.log(array[i].savedText);
+                //console.log(textAreaElList[0].textAreaEl.val());
                 break;
             case "one":
-                textAreaElList[1].text(array[i].savedText);
+                textAreaElList[1].textAreaEl.innerHTML = array[i].savedText;
                 break;
             case "two":
-                textAreaElList[2].text(array[i].savedText);
+                textAreaElList[2].textAreaEl.innerHTML = array[i].savedText;
                 break;
             case "three":
-                textAreaElList[3].text(array[i].savedText);
+                textAreaElList[3].textAreaEl.innerHTML = array[i].savedText;
                 break; 
             case "four":
-                textAreaElList[4].text(array[i].savedText);
+                textAreaElList[4].textAreaEl.innerHTML = array[i].savedText;
                 break;
             case "five":
-                textAreaElList[5].text(array[i].savedText);
+                textAreaElList[5].textAreaEl.innerHTML = array[i].savedText;
                 break;
             case "six":
-                textAreaElList[6].text(array[i].savedText);
+                textAreaElList[6].textAreaEl.innerHTML = array[i].savedText;
                 break;
             case "seven":
-                textAreaElList[7].text(array[i].savedText);
+                textAreaElList[7].textAreaEl.innerHTML = array[i].savedText;
                 break;
             case "eight":
-                textAreaElList[8].text(array[i].savedText);
+                textAreaElList[8].textAreaEl.innerHTML = array[i].savedText;
                 break;   
         }
     }
