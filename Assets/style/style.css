@@ -15,7 +15,7 @@ textarea{
 
 .jumbotron {
   text-align: center;
-  background-color: transparent;
+  background-color: white;
   color: black;
   border-radius: 0;
   border-bottom: 10px solid black;
@@ -40,8 +40,12 @@ textarea{
   background-color: #ffffff;
   color: #000000;
   border-top: 1px dashed #000000;
+  text-align: right;
 }
 
+
+/*this is going to be used by scritp to target when time is 
+past, present, and future*/
 .past {
   background-color: #d3d3d3;
   color: white;
@@ -57,6 +61,9 @@ textarea{
   color: white;
 }
 
+
+/*thsi is going to use JSON and event handeler together
+to save data to local storage*/
 .saveBtn {
   border-left: 1px solid black;
   border-top-right-radius: 15px;
