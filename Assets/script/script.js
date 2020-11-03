@@ -1,31 +1,15 @@
-// <div  class="row">
-// <div class="col-1 hour">9AM</div>
-// <textarea class="col description"></textarea>
-// <button class="col-1 saveBtn"><img src="Assets/images/save.png"></button>
-// </div>
-// </div>
-
 //create elements variables
 var timeBLock = $('.time-block');
-var currentDayEl =$('#currentDay')
-var textAreaValue = [];
-//
-if(localStorage.getItem('textValue') !== null) {
-    textAreaValue = JSON.parse(localStorage.getItem("textValue"));
-    console.log(textAreaValue)
-}
-console.log(textAreaValue)
+var currentDayEl =$('#currentDay');
+
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
 var currentDay= moment();
 
-//var textAreaValue = [];
 var armyTime = 12;
-
 
 //display current day in jumbotron
 currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
-
 
 //this function creates, elements for each row in the schedule 
 for(var i =0; i < hoursList.length; i++){
@@ -61,9 +45,14 @@ function savaInfo(event){
         //grab button id and value and send it to local storage
         var string = $(event.target.parentElement.children[1]).val();
         var textareaId = $(event.target.parentElement.children[1]).attr('id');
+        var textAreaValue = [];
         //console.log(string, textareaId);
+        if(localStorage.getItem('textValue') !== null) {
+            textAreaValue = JSON.parse(localStorage.getItem("textValue"));
+            console.log(textAreaValue);
+        }
         textAreaValue.push({textareaId:textareaId, savedText:string});
-        console.log('second:' + textAreaValue)
+        console.log('second:' + textAreaValue);
         localStorage.setItem("textValue", JSON.stringify(textAreaValue));
         //console.log(textAreaValue);
        // textAreaValue = JSON.parse(localStorage.getItem("textValue")); 
@@ -74,7 +63,7 @@ function renderData(){
     //by geeting the data and storing the data on a array after 
     //loops arround finds matching text box by using queryselector and inputs the data 
     var arrayJSON = JSON.parse(localStorage.getItem("textValue"));
-    console.log('JSON: ' + arrayJSON)
+    console.log('JSON: ' + arrayJSON);
     if (!arrayJSON) {
         return;
     }
