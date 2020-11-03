@@ -10,7 +10,7 @@ var currentDayEl =$('#currentDay');
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
 var currentDay= moment();
-var armyTime = 13;
+var armyTime = 12;
 var textAreaList = [];
 var textAreaValue = [];
 
