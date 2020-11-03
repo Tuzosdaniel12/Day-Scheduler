@@ -108,10 +108,12 @@ function renderData(){
 function checkTime(){
     for(var i = 0; i < hoursList.length; i++){
         var currentHour = parseInt(moment().format("kk"));
-        var textAreaHour = textAreaList[i].attr('data-index');
+        var textAreaHour = parseInt(textAreaList[i].attr('data-index'));
         //console.log("CURRENT HOUR "+currentHour);
         //console.log("textAreaHour "+textAreaHour);
+        if (currentHour == 24){currentHour = 0;}//had to add this because when is 12am it formats as 24 I thought it would had been 00;
         if(textAreaHour < currentHour){//check if hour is less then chage class to past,and disable textArea
+            console.log("hit");
             textAreaList[i].addClass('past');
             textAreaList[i].prop('disabled', true);
             textAreaList[i].siblings().eq(1).prop('disabled', true);
