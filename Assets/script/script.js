@@ -9,107 +9,112 @@
 var timeBLock = $('.time-block');
 var currentDayEl =$('#currentDay')
 
-var textAreaElList = [];
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
 var currentDay= moment();
 var currentHour = moment().format("h");
-currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
-var textAreaValue = [];
+//var textAreaValue = [];
 var armyTime = 12;
-var row;
-var hourDiv;
-var textArea;
-var saveBtn;
-var icon;
 
-createElements();
-renderData();
+
+//display current day in jumbotron
+currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
+
 
 //this function creates, elements for each row in the schedule 
-function createElements(){
     for(var i =0; i < hoursList.length; i++){
        // console.log(hoursList);
-        row = $('<div>').addClass('row').attr('data-index',i);//create each row
+        var row = $('<div>').addClass('row').attr('data-index',i);//create each row
         timeBLock.append(row);//appendt o time block
         row.attr('data-index', hoursList[i]);
         //console.log(row.attr('data-index'));
-        hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
-        textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
-        saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
-        icon = $('<img>').attr('src', 'Assets/images/save.png').attr('data-index', i);
+        var hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
+        var textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
+        var saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
         if(i < 3){//formats the the text from Am to Pm
             hourDiv.text(hoursList[i]+'AM');
-            hourDiv.attr('data-index', hoursList[i]);
+            textArea.attr('data-index',hoursList[i] + ":00");
+            
         }
         else{
             hourDiv.text(hoursList[i]+'PM');
-            hourDiv.attr('data-index', armyTime);
+            textArea.attr('data-index', hoursList[i] + ":00");
             armyTime++;
         }
         //console.log(textArea.attr('id'));
         row.append(hourDiv, textArea, saveBtn);
-        saveBtn.append(icon);
-        textAreaElList.push({textAreaEl : $('#'+dataWords[i])}); 
+        saveBtn.text('SAVE');
+        console.log(textArea.attr('data-index'));
         //console.log(saveBtn);
     }
-}
+
     function savaInfo(event){
         event.preventDefault();
+        event.stopPropagation();
         console.log();
         var index =parseInt( $(event.target).attr('data-index'));//grab button dataindex and call a function to save text content matching data -index
-        console.log(index);
-        //when they hit the save button they will send the right text box text to save to local storage
-
+        //console.log(index);
+         
         var string = $(event.target.parentElement.children[1]).val();
-        var textareaId = textAreaElList[index].textAreaEl.attr('id');
-        textAreaValue.push({textareaId:textareaId, savedText:string})
-        textAreaValue = saveData(textAreaValue);
-        
+        var textareaId = $(event.target.parentElement.children[1]).attr('id');
+        console.log(string, textareaId);
+
+        var textAreaValue = [];
+        //textAreaValue.push({textareaId:textareaId, savedText:string});
+        if (JSON.parse(localStorage.getItem("array"))=== undefined){
+            textAreaValue = [{textareaId:textareaId, savedText:string}];
+            console.log(textAreaValue);
+
+        }
+        else{
+            textAreaValue = JSON.parse(localStorage.getItem("array")); 
+        }
+
+        textAreaValue.concat({textareaId:textareaId, savedText:string});
+        localStorage.setItem("array", JSON.stringify(textAreaValue));
         console.log(textAreaValue);
+        textAreaValue = JSON.parse(localStorage.getItem("array"));  
+        // $(event.target.parentElement.children[1]).text(textAreaValue.savedText);
 }
 
-function saveData(array){///this function takes the id of text area and the text that was saved and is stored in array of objects so latter i can fetch it from local storage
-    localStorage.setItem("array", JSON.stringify(array));
-    return array;
-}
+
 
 
 function renderData(){
-    var array = JSON.parse(localStorage.getItem("array"));
-    for(var i = 0; i < array.length;i++){
-        switch(array[i].textareaId){
+    var arrayJSON = JSON.parse(localStorage.getItem("array"));
+    for(var i = 0; i < arrayJSON.length;i++){
+        console.log(arrayJSON[i].textareaId);
+        switch(arrayJSON[i].textareaId){   
             case "zero":
-                textAreaElList[0].textAreaEl.innerHTML = array[i].savedText;
-                //console.log(array[i].savedText);
-                //console.log(textAreaElList[0].textAreaEl.val());
+                $('zero').text(arrayJSON[i].savedText);
                 break;
             case "one":
-                textAreaElList[1].textAreaEl.innerHTML = array[i].savedText;
+                $('one').text(arrayJSON[i].savedText);
                 break;
             case "two":
-                textAreaElList[2].textAreaEl.innerHTML = array[i].savedText;
+                $('two').text(arrayJSON[i].savedText);
                 break;
             case "three":
-                textAreaElList[3].textAreaEl.innerHTML = array[i].savedText;
+                $('three').text(arrayJSON[i].savedText);
                 break; 
             case "four":
-                textAreaElList[4].textAreaEl.innerHTML = array[i].savedText;
+                $('four').text(arrayJSON[i].savedText);
                 break;
             case "five":
-                textAreaElList[5].textAreaEl.innerHTML = array[i].savedText;
+                $('five').text(arrayJSON[i].savedText);
                 break;
             case "six":
-                textAreaElList[6].textAreaEl.innerHTML = array[i].savedText;
+                $('six').text(arrayJSON[i].savedText);
                 break;
             case "seven":
-                textAreaElList[7].textAreaEl.innerHTML = array[i].savedText;
+                $('seven').text(arrayJSON[i].savedText);
                 break;
             case "eight":
-                textAreaElList[8].textAreaEl.innerHTML = array[i].savedText;
+                $('eight').text(arrayJSON[i].savedText);
                 break;   
         }
     }
 }
+
 
 timeBLock.on('click', '.saveBtn', savaInfo);//delagate funtion for all save buttons
