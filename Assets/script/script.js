@@ -8,6 +8,7 @@
 //create elements variables
 var timeBLock = $('.time-block');
 var currentDayEl =$('#currentDay')
+var textAreaValue = [];
 
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
@@ -48,37 +49,22 @@ currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
         //console.log(saveBtn);
     }
 
-    function savaInfo(event){
+ function savaInfo(event){
         event.preventDefault();
         event.stopPropagation();
         console.log();
         var index =parseInt( $(event.target).attr('data-index'));//grab button dataindex and call a function to save text content matching data -index
-        //console.log(index);
-         
+
         var string = $(event.target.parentElement.children[1]).val();
         var textareaId = $(event.target.parentElement.children[1]).attr('id');
         console.log(string, textareaId);
-
-        var textAreaValue = [];
-        //textAreaValue.push({textareaId:textareaId, savedText:string});
-        if (JSON.parse(localStorage.getItem("array"))=== undefined){
-            textAreaValue = [{textareaId:textareaId, savedText:string}];
-            console.log(textAreaValue);
-
-        }
-        else{
-            textAreaValue = JSON.parse(localStorage.getItem("array")); 
-        }
-
-        textAreaValue.concat({textareaId:textareaId, savedText:string});
+        textAreaValue.push({textareaId:textareaId, savedText:string});
         localStorage.setItem("array", JSON.stringify(textAreaValue));
         console.log(textAreaValue);
-        textAreaValue = JSON.parse(localStorage.getItem("array"));  
-        // $(event.target.parentElement.children[1]).text(textAreaValue.savedText);
+        textAreaValue = JSON.parse(localStorage.getItem("array")); 
+        renderData(); 
+
 }
-
-
-
 
 function renderData(){
     var arrayJSON = JSON.parse(localStorage.getItem("array"));
@@ -86,35 +72,35 @@ function renderData(){
         console.log(arrayJSON[i].textareaId);
         switch(arrayJSON[i].textareaId){   
             case "zero":
-                $('zero').text(arrayJSON[i].savedText);
+                $('#zero').text(arrayJSON[i].savedText);
                 break;
             case "one":
-                $('one').text(arrayJSON[i].savedText);
+                $('#one').text(arrayJSON[i].savedText);
                 break;
             case "two":
-                $('two').text(arrayJSON[i].savedText);
+                $('#two').text(arrayJSON[i].savedText);
                 break;
             case "three":
-                $('three').text(arrayJSON[i].savedText);
+                $('#three').text(arrayJSON[i].savedText);
                 break; 
             case "four":
-                $('four').text(arrayJSON[i].savedText);
+                $('#four').text(arrayJSON[i].savedText);
                 break;
             case "five":
-                $('five').text(arrayJSON[i].savedText);
+                $('#five').text(arrayJSON[i].savedText);
                 break;
             case "six":
-                $('six').text(arrayJSON[i].savedText);
+                $('#six').text(arrayJSON[i].savedText);
                 break;
             case "seven":
-                $('seven').text(arrayJSON[i].savedText);
+                $('#seven').text(arrayJSON[i].savedText);
                 break;
             case "eight":
-                $('eight').text(arrayJSON[i].savedText);
+                $('#eight').text(arrayJSON[i].savedText);
                 break;   
         }
     }
 }
 
-
+//renderData();
 timeBLock.on('click', '.saveBtn', savaInfo);//delagate funtion for all save buttons
