@@ -37,11 +37,15 @@ for(var i =0; i < hoursList.length; i++){
         icon = $('<img>').attr('src', './Assets/images/save.png');
     if(i < 3){//formats the the text from Am to Pm
             hourDiv.text(hoursList[i]+'AM');
-            textArea.attr('data-index',hoursList[i]);     
+            textArea.attr('data-index',hoursList[i]);
+            saveBtn.attr('data-hour',hoursList[i]);
+            icon.attr('data-hour',hoursList[i]);   
     }
     else{
             hourDiv.text(hoursList[i]+'PM');
             textArea.attr('data-index', armyTime);
+            saveBtn.attr('data-hour',armyTime); 
+            icon.attr('data-hour',armyTime); 
             armyTime++;
     }
     //create this array so later i can target each text area accoring to time
@@ -58,16 +62,28 @@ for(var i =0; i < hoursList.length; i++){
 function savaInfo(event){
         event.preventDefault();
         event.stopPropagation();
-        console.log('hit');
-        //grab button id and value and send it to local storage
         var string = $(event.target.parentElement.children[1]).val();
         var textareaId = $(event.target.parentElement.children[1]).attr('id');
+        var currentHour = parseInt(moment().format("kk"));
+        var checkIfPresent = parseInt($(event.target).attr('data-hour'));
+
+        if(currentHour == checkIfPresent ){//check with user if they have enought time to schedule a meeting
+            if(!confirm("Are you sure you want to Schedule a task with an hour or less left?")){return};  
+        }
+        
+        // console.log('hit');
+        //grab button id and value and send it to local storage
+
         if(textareaId === undefined && string === undefined){//when they click the icon send them one branch up to get the values
             //console.log(string, textareaId);
             string = $(event.target.parentElement.parentElement.children[1]).val();
             textareaId = $(event.target.parentElement.parentElement.children[1]).attr('id');
             ///console.log(string, textareaId);
         }
+        if(string == ""){//check if user is saving anything
+            return;
+        }
+        
         textAreaValue.push({textareaId:textareaId, savedText:string});
         console.log('second:' + textAreaValue);
         localStorage.setItem("textValue", JSON.stringify(textAreaValue));
@@ -102,8 +118,8 @@ function checkTime(){
         }
         else if(textAreaHour == currentHour){//check if hour is the same and change class to pressent and disable text area
             textAreaList[i].addClass('present');
-            textAreaList[i].prop('disabled', true);
-            textAreaList[i].siblings().eq(1).prop('disabled', true);
+            textAreaList[i].prop('disabled', false);
+            textAreaList[i].siblings().eq(1).prop('disabled', false);
         }
         else if(textAreaHour > currentHour){//check if hour is greater then current hour thenn change class to futureand make texarea avaliable
             textAreaList[i].addClass('future');
