@@ -109,7 +109,6 @@ function checkTime(){
             textAreaList[i].siblings().eq(1).prop('disabled', false);
         }
     }
-
 }
 
 createElements();
