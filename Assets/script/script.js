@@ -5,8 +5,15 @@ var currentDayEl =$('#currentDay');
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
 var currentDay= moment();
+var armyTime = 18;
+textAreaList = [];
+var textAreaValue = [];
 
-var armyTime = 12;
+//console.log(string, textareaId);
+if(localStorage.getItem('textValue') !== null) {
+    textAreaValue = JSON.parse(localStorage.getItem("textValue"));
+    console.log(textAreaValue);
+}
 
 //display current day in jumbotron
 currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
@@ -21,19 +28,22 @@ for(var i =0; i < hoursList.length; i++){
         var hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
         var textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
         var saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
+        var icon = $('<img>').attr('src', './Assets/images/save.png');
     if(i < 3){//formats the the text from Am to Pm
             hourDiv.text(hoursList[i]+'AM');
-            textArea.attr('data-index',hoursList[i]);
-            
+            textArea.attr('data-index',hoursList[i]);     
     }
     else{
             hourDiv.text(hoursList[i]+'PM');
-            textArea.attr('data-index', hoursList[i]);
+            textArea.attr('data-index', armyTime);
             armyTime++;
     }
-        //console.log(textArea.attr('id'));
+    //create this array so later i can target each text area accoring to time
         row.append(hourDiv, textArea, saveBtn);
-        saveBtn.text('SAVE');
+        saveBtn.append(icon);
+
+        textAreaList[i] = $("#"+dataWords[i]); 
+        console.log( textAreaList[i].attr('data-index'));
         //console.log(textArea.attr('data-index'));
         //console.log(saveBtn);
     }
@@ -45,17 +55,16 @@ function savaInfo(event){
         //grab button id and value and send it to local storage
         var string = $(event.target.parentElement.children[1]).val();
         var textareaId = $(event.target.parentElement.children[1]).attr('id');
-        var textAreaValue = [];
-        //console.log(string, textareaId);
-        if(localStorage.getItem('textValue') !== null) {
-            textAreaValue = JSON.parse(localStorage.getItem("textValue"));
-            console.log(textAreaValue);
+        if(textareaId === undefined && string === undefined){//when they click the icon send them one branch up to get the values
+            //console.log(string, textareaId);
+            string = $(event.target.parentElement.parentElement.children[1]).val();
+            textareaId = $(event.target.parentElement.parentElement.children[1]).attr('id');
+            ///console.log(string, textareaId);
         }
         textAreaValue.push({textareaId:textareaId, savedText:string});
         console.log('second:' + textAreaValue);
         localStorage.setItem("textValue", JSON.stringify(textAreaValue));
         //console.log(textAreaValue);
-       // textAreaValue = JSON.parse(localStorage.getItem("textValue")); 
 }
 
 function renderData(){
@@ -65,47 +74,34 @@ function renderData(){
     var arrayJSON = JSON.parse(localStorage.getItem("textValue"));
     console.log('JSON: ' + arrayJSON);
     if (!arrayJSON) {
-        return;
+        return;//return iff JSON array is empty
     }
     for(var i = 0; i < arrayJSON.length;i++){
-        console.log(arrayJSON[i].textareaId);
-        switch(arrayJSON[i].textareaId){   
-            case "zero":
-                $('#zero').text(arrayJSON[i].savedText);
-                break;
-            case "one":
-                $('#one').text(arrayJSON[i].savedText);
-                break;
-            case "two":
-                $('#two').text(arrayJSON[i].savedText);
-                break;
-            case "three":
-                $('#three').text(arrayJSON[i].savedText);
-                break; 
-            case "four":
-                $('#four').text(arrayJSON[i].savedText);
-                break;
-            case "five":
-                $('#five').text(arrayJSON[i].savedText);
-                break;
-            case "six":
-                $('#six').text(arrayJSON[i].savedText);
-                break;
-            case "seven":
-                $('#seven').text(arrayJSON[i].savedText);
-                break;
-            case "eight":
-                $('#eight').text(arrayJSON[i].savedText);
-                break;   
-        }
-    }
+        $('#'+arrayJSON[i].textareaId).text(arrayJSON[i].savedText);//target text area
+    }               
 }
 function checkTime(){
     for(var i = 0; i < hoursList.length; i++){
-        var currentHour = moment().format("h");
+        var currentHour = parseInt(moment().format("kk"));
+        var textAreaHour = textAreaList[i].attr('data-index');
+        //console.log("CURRENT HOUR "+currentHour);
+        //console.log("textAreaHour "+textAreaHour);
+        if(textAreaHour < currentHour){//check if hour is less then chage class to past,and disable textArea
+            textAreaList[i].addClass('past');
+            textAreaList[i].prop('disabled', true);
+        }
+        else if(textAreaHour == currentHour){//check if hour is the same and change class to pressent and disable text area
+            textAreaList[i].addClass('present');
+            textAreaList[i].prop('disabled', true);
+        }
+        else if(textAreaHour > currentHour){//check if hour is greater then current hour thenn change class to futureand make texarea avaliable
+            textAreaList[i].addClass('future');
+            textAreaList[i].prop('disabled', false);
+        }
     }
 
 }
 
+checkTime();
 renderData();
 timeBLock.on('click', '.saveBtn', savaInfo);//delagate funtion for all save buttons
