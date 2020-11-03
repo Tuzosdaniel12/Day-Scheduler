@@ -1,9 +1,15 @@
 # Day-Scheduler
+* [Task](#Task)
+* [User Story](#User-Story)
+* [Acceptance Criteria](#Acceptance-Criteria)
+* [Process](#Process)
+* [Work Examples](#Work-Examples)
+* [Links](#Links)
 
 ## Task
  * For this task the user wants a day planner app to help them plan there busy day
 
-## User Story
+## User-Story
 
 Implement the following user story:
 
@@ -13,7 +19,7 @@ I WANT to add important events to a daily planner
 SO THAT I can manage my time effectively
 ```
 
-## Acceptance Criteria
+## Acceptance-Criteria
 
 Aim to meet the following acceptance criteria:
 
@@ -42,7 +48,11 @@ THEN the saved events persist
 * Last step was to dynamically change the back ground color of the text area by checking time
 * When past then grey, present then red, future then green.
 * Also added a extra future that disables text area and button if time has past
-## Work Examples
+## Work-Examples
 
 ## Links
+* Live Website
+    * https://tuzosdaniel12.github.io/Day-Scheduler/.
 
+* Repo
+    * https://github.com/Tuzosdaniel12/Day-Scheduler
