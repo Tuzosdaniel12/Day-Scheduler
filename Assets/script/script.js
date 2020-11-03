@@ -1,12 +1,17 @@
 //create elements variables
+var row;
+var hourDiv;
+var textArea;
+var saveBtn;
+var icon;
 var timeBLock = $('.time-block');
 var currentDayEl =$('#currentDay');
 
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
 var currentDay= moment();
-var armyTime = 18;
-textAreaList = [];
+var armyTime = 12;
+var textAreaList = [];
 var textAreaValue = [];
 
 //console.log(string, textareaId);
@@ -19,16 +24,17 @@ if(localStorage.getItem('textValue') !== null) {
 currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
 
 //this function creates, elements for each row in the schedule 
+function createElements(){
 for(var i =0; i < hoursList.length; i++){
        // console.log(hoursList);
-        var row = $('<div>').addClass('row').attr('data-index',i);//create each row
+        row = $('<div>').addClass('row').attr('data-index',i);//create each row
         timeBLock.append(row);//appendt o time block
         row.attr('data-index', hoursList[i]);
         //console.log(row.attr('data-index'));
-        var hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
-        var textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
-        var saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
-        var icon = $('<img>').attr('src', './Assets/images/save.png');
+        hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
+        textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
+        saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
+        icon = $('<img>').attr('src', './Assets/images/save.png');
     if(i < 3){//formats the the text from Am to Pm
             hourDiv.text(hoursList[i]+'AM');
             textArea.attr('data-index',hoursList[i]);     
@@ -47,6 +53,7 @@ for(var i =0; i < hoursList.length; i++){
         //console.log(textArea.attr('data-index'));
         //console.log(saveBtn);
     }
+}
 
 function savaInfo(event){
         event.preventDefault();
@@ -89,19 +96,23 @@ function checkTime(){
         if(textAreaHour < currentHour){//check if hour is less then chage class to past,and disable textArea
             textAreaList[i].addClass('past');
             textAreaList[i].prop('disabled', true);
+            textAreaList[i].siblings().eq(1).prop('disabled', true);
         }
         else if(textAreaHour == currentHour){//check if hour is the same and change class to pressent and disable text area
             textAreaList[i].addClass('present');
             textAreaList[i].prop('disabled', true);
+            textAreaList[i].siblings().eq(1).prop('disabled', true);
         }
         else if(textAreaHour > currentHour){//check if hour is greater then current hour thenn change class to futureand make texarea avaliable
             textAreaList[i].addClass('future');
             textAreaList[i].prop('disabled', false);
+            textAreaList[i].siblings().eq(1).prop('disabled', false);
         }
     }
 
 }
 
+createElements();
 checkTime();
 renderData();
 timeBLock.on('click', '.saveBtn', savaInfo);//delagate funtion for all save buttons
