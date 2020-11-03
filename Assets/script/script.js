@@ -9,11 +9,16 @@
 var timeBLock = $('.time-block');
 var currentDayEl =$('#currentDay')
 var textAreaValue = [];
-
+//
+if(localStorage.getItem('textValue') !== null) {
+    textAreaValue = JSON.parse(localStorage.getItem("textValue"));
+    console.log(textAreaValue)
+}
+console.log(textAreaValue)
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
 var currentDay= moment();
-var currentHour = moment().format("h");
+
 //var textAreaValue = [];
 var armyTime = 12;
 
@@ -23,7 +28,7 @@ currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
 
 
 //this function creates, elements for each row in the schedule 
-    for(var i =0; i < hoursList.length; i++){
+for(var i =0; i < hoursList.length; i++){
        // console.log(hoursList);
         var row = $('<div>').addClass('row').attr('data-index',i);//create each row
         timeBLock.append(row);//appendt o time block
@@ -32,42 +37,47 @@ currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
         var hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
         var textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
         var saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
-        if(i < 3){//formats the the text from Am to Pm
+    if(i < 3){//formats the the text from Am to Pm
             hourDiv.text(hoursList[i]+'AM');
-            textArea.attr('data-index',hoursList[i] + ":00");
+            textArea.attr('data-index',hoursList[i]);
             
-        }
-        else{
+    }
+    else{
             hourDiv.text(hoursList[i]+'PM');
-            textArea.attr('data-index', hoursList[i] + ":00");
+            textArea.attr('data-index', hoursList[i]);
             armyTime++;
-        }
+    }
         //console.log(textArea.attr('id'));
         row.append(hourDiv, textArea, saveBtn);
         saveBtn.text('SAVE');
-        console.log(textArea.attr('data-index'));
+        //console.log(textArea.attr('data-index'));
         //console.log(saveBtn);
     }
 
- function savaInfo(event){
+function savaInfo(event){
         event.preventDefault();
         event.stopPropagation();
-        console.log();
-        var index =parseInt( $(event.target).attr('data-index'));//grab button dataindex and call a function to save text content matching data -index
-
+        console.log('hit');
+        //grab button id and value and send it to local storage
         var string = $(event.target.parentElement.children[1]).val();
         var textareaId = $(event.target.parentElement.children[1]).attr('id');
-        console.log(string, textareaId);
+        //console.log(string, textareaId);
         textAreaValue.push({textareaId:textareaId, savedText:string});
-        localStorage.setItem("array", JSON.stringify(textAreaValue));
-        console.log(textAreaValue);
-        textAreaValue = JSON.parse(localStorage.getItem("array")); 
-        renderData(); 
-
+        console.log('second:' + textAreaValue)
+        localStorage.setItem("textValue", JSON.stringify(textAreaValue));
+        //console.log(textAreaValue);
+       // textAreaValue = JSON.parse(localStorage.getItem("textValue")); 
 }
 
 function renderData(){
-    var arrayJSON = JSON.parse(localStorage.getItem("array"));
+    //this function rendes the data back to the browser that once store during session 
+    //by geeting the data and storing the data on a array after 
+    //loops arround finds matching text box by using queryselector and inputs the data 
+    var arrayJSON = JSON.parse(localStorage.getItem("textValue"));
+    console.log('JSON: ' + arrayJSON)
+    if (!arrayJSON) {
+        return;
+    }
     for(var i = 0; i < arrayJSON.length;i++){
         console.log(arrayJSON[i].textareaId);
         switch(arrayJSON[i].textareaId){   
@@ -101,6 +111,12 @@ function renderData(){
         }
     }
 }
+function checkTime(){
+    for(var i = 0; i < hoursList.length; i++){
+        var currentHour = moment().format("h");
+    }
 
-//renderData();
+}
+
+renderData();
 timeBLock.on('click', '.saveBtn', savaInfo);//delagate funtion for all save buttons
