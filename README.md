@@ -9,6 +9,9 @@
 ## Task
  * For this task the user wants a day planner app to help them plan there busy day
 
+ * User Expectation
+ ![CODE](https://github.com/Tuzosdaniel12/Day-Scheduler/blob/main/Assets/images/05-third-party-apis-homework-demo.gif)
+
 ## User-Story
 
 Implement the following user story:
@@ -49,7 +52,11 @@ THEN the saved events persist
 * When past then grey, present then red, future then green.
 * Also added a extra future that disables text area and button if time has past
 ## Work-Examples
-
+![CODE](https://github.com/Tuzosdaniel12/Day-Scheduler/blob/main/Assets/images/code-1.png)
+![CODE](https://github.com/Tuzosdaniel12/Day-Scheduler/blob/main/Assets/images/code-2.png)
+![CODE](https://github.com/Tuzosdaniel12/Day-Scheduler/blob/main/Assets/images/code-3.png)
+![CODE](https://github.com/Tuzosdaniel12/Day-Scheduler/blob/main/Assets/images/code-4.png)
+![CODE](https://github.com/Tuzosdaniel12/Day-Scheduler/blob/main/Assets/images/code-5.png)
 ## Links
 * Live Website
     * https://tuzosdaniel12.github.io/Day-Scheduler/.
