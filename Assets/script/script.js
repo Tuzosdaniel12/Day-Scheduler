@@ -75,9 +75,9 @@ function savaInfo(event){
 }
 
 function renderData(){
-    //this function rendes the data back to the browser that once store during session 
-    //by geeting the data and storing the data on a array after 
-    //loops arround finds matching text box by using queryselector and inputs the data 
+    //this function render the data back to the browser that once store during session 
+    //by getting the data and storing the data on a array after 
+    //loops around finds matching text box by using queryselector and inputs the data 
     var arrayJSON = JSON.parse(localStorage.getItem("textValue"));
     console.log('JSON: ' + arrayJSON);
     if (!arrayJSON) {
@@ -87,6 +87,8 @@ function renderData(){
         $('#'+arrayJSON[i].textareaId).text(arrayJSON[i].savedText);//target text area
     }               
 }
+
+
 function checkTime(){
     for(var i = 0; i < hoursList.length; i++){
         var currentHour = parseInt(moment().format("kk"));

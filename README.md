@@ -1,10 +1,7 @@
 # Day-Scheduler
 
-# 05 Third-Party APIs: Work Day Scheduler
-
-Create a simple calendar application that allows the user to save events for each hour of the day. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
-
-You'll need to use the [Moment.js library](https://momentjs.com/) to work with date and time. Be sure to read the documentation carefully and concentrate on using Moment.js in the browser.
+## Task
+ * For this task the user wants a day planner app to help them plan there busy day
 
 ## User Story
 
@@ -35,18 +32,17 @@ THEN the text for that event is saved in local storage
 WHEN I refresh the page
 THEN the saved events persist
 ```
+## Process
+* Used Bootstrap to style the app form
+* I used index html and lay out Bootstrap to see what would be the elements I dynamically needed to create with Jquery
+* On script I created every element and added all necessary classes and id that I had planed before
+* Used provided Css to add extra style to app
+* After every element was created I focus on the saved event to save all the data
+* I used data attributes and id to target specific textarea, to get the values and store the value back again, this helped a lot because I didn't know in what order the user was going to save the data 
+* Last step was to dynamically change the back ground color of the text area by checking time
+* When past then grey, present then red, future then green.
+* Also added a extra future that disables text area and button if time has past
+## Work Examples
 
-The following animation demonstrates the application functionality:
+## Links
 
-![A user clicks on slots on the color-coded calendar and edits the events.](./Assets/05-third-party-apis-homework-demo.gif)
-
-## Review
-
-You are required to submit the following for review:
-
-* The URL of the deployed application
-
-* The URL of the GitHub repository, with a unique name and a README describing the project
-
-- - -
-© 2020 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
