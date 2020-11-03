@@ -10,7 +10,7 @@ var currentDayEl =$('#currentDay');
 var hoursList = [9,10,11,12,1,2,3,4,5];
 var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
 var currentDay= moment();
-var armyTime = 12;
+var armyTime = 9;
 var textAreaList = [];
 var textAreaValue = [];
 
@@ -26,36 +26,35 @@ currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
 //this function creates, elements for each row in the schedule 
 function createElements(){
 for(var i =0; i < hoursList.length; i++){
-       // console.log(hoursList);
-        row = $('<div>').addClass('row').attr('data-index',i);//create each row
-        timeBLock.append(row);//appendt o time block
-        row.attr('data-index', hoursList[i]);
-        //console.log(row.attr('data-index'));
-        hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
-        textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
-        saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
-        icon = $('<img>').attr('src', './Assets/images/save.png');
+    // console.log(hoursList);
+    row = $('<div>').addClass('row').attr('data-index',i);//create each row
+    timeBLock.append(row);//append o time block
+    //row.attr('data-index', hoursList[i]);
+    //console.log(row.attr('data-index'));
+    hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
+    textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
+    saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
+    icon = $('<img>').attr('src', './Assets/images/save.png');
+
     if(i < 3){//formats the the text from Am to Pm
-            hourDiv.text(hoursList[i]+'AM');
-            textArea.attr('data-index',hoursList[i]);
-            saveBtn.attr('data-hour',hoursList[i]);
-            icon.attr('data-hour',hoursList[i]);   
+            hourDiv.text(hoursList[i]+'AM');//this just formats time
     }
     else{
-            hourDiv.text(hoursList[i]+'PM');
-            textArea.attr('data-index', armyTime);
-            saveBtn.attr('data-hour',armyTime); 
-            icon.attr('data-hour',armyTime); 
-            armyTime++;
+            hourDiv.text(hoursList[i]+'PM');//format time
     }
+    //setting special data to each element
+    textArea.attr('data-index', armyTime);
+    saveBtn.attr('data-hour',armyTime); 
+    icon.attr('data-hour',armyTime); 
+    armyTime++;
     //create this array so later i can target each text area accoring to time
-        row.append(hourDiv, textArea, saveBtn);
-        saveBtn.append(icon);
+    row.append(hourDiv, textArea, saveBtn);
+    saveBtn.append(icon);
 
-        textAreaList[i] = $("#"+dataWords[i]); 
-        console.log( textAreaList[i].attr('data-index'));
-        //console.log(textArea.attr('data-index'));
-        //console.log(saveBtn);
+    textAreaList[i] = $("#"+dataWords[i]); 
+    console.log( textAreaList[i].attr('data-index'));
+    //console.log(textArea.attr('data-index'));
+    //console.log(saveBtn);
     }
 }
 
