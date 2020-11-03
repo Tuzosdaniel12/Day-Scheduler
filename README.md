@@ -1,5 +1,6 @@
 # Day-Scheduler
 * [Task](#Task)
+* [User Expectation](#User-Expectation)
 * [User Story](#User-Story)
 * [Acceptance Criteria](#Acceptance-Criteria)
 * [Process](#Process)
@@ -9,7 +10,8 @@
 ## Task
  * For this task the user wants a day planner app to help them plan there busy day
 
- * User Expectation
+## User-Expectation
+
  ![CODE](https://github.com/Tuzosdaniel12/Day-Scheduler/blob/main/Assets/images/05-third-party-apis-homework-demo.gif)
 
 ## User-Story
