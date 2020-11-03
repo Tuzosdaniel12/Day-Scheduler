@@ -100,7 +100,7 @@ function renderData(){
         return;//return iff JSON array is empty
     }
     for(var i = 0; i < arrayJSON.length;i++){
-        $('#'+arrayJSON[i].textareaId).text(arrayJSON[i].savedText);//target text area
+        $('#'+arrayJSON[i].textareaId).text(arrayJSON[i].savedText);//target text area by id
     }               
 }
 
@@ -113,24 +113,30 @@ function checkTime(){
         //console.log("textAreaHour "+textAreaHour);
         if (currentHour == 24){currentHour = 0;}//had to add this because when is 12am it formats as 24 I thought it would had been 00;
         if(textAreaHour < currentHour){//check if hour is less then chage class to past,and disable textArea
-            console.log("hit");
+            //console.log("hit");
             textAreaList[i].addClass('past');
-            textAreaList[i].prop('disabled', true);
-            textAreaList[i].siblings().eq(1).prop('disabled', true);
+            trueFunction(textAreaList[i]);
         }
         else if(textAreaHour == currentHour){//check if hour is the same and change class to pressent and disable text area
             textAreaList[i].addClass('present');
-            textAreaList[i].prop('disabled', false);
-            textAreaList[i].siblings().eq(1).prop('disabled', false);
+            falseFunction(textAreaList[i]);
         }
         else if(textAreaHour > currentHour){//check if hour is greater then current hour thenn change class to futureand make texarea avaliable
             textAreaList[i].addClass('future');
-            textAreaList[i].prop('disabled', false);
-            textAreaList[i].siblings().eq(1).prop('disabled', false);
+            falseFunction(textAreaList[i]);
         }
     }
 }
-
+///set text area and sibling button to able
+function falseFunction(textArea){
+    textArea.prop('disabled', false);
+    textArea.siblings().eq(1).prop('disabled', false);
+}
+///set text area and sibling button to disabled
+function trueFunction(textArea){
+    textArea.prop('disabled', true);
+    textArea.siblings().eq(1).prop('disabled', true);
+}
 createElements();
 checkTime();
 renderData();
