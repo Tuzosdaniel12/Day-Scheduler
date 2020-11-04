@@ -15,10 +15,6 @@ var textAreaList = [];
 var textAreaValue = [];
 
 //console.log(string, textareaId);
-if(localStorage.getItem('textValue') !== null) {
-    textAreaValue = JSON.parse(localStorage.getItem("textValue"));
-    console.log(textAreaValue);
-}
 
 //display current day in jumbotron
 currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
@@ -47,10 +43,10 @@ for(var i =0; i < hoursList.length; i++){
     saveBtn.attr('data-hour',armyTime); 
     icon.attr('data-hour',armyTime); 
     armyTime++;
-    //create this array so later i can target each text area accoring to time
+    //append all children
     row.append(hourDiv, textArea, saveBtn);
     saveBtn.append(icon);
-
+    //create this array so later i can target each text area accoring to time
     textAreaList[i] = $("#"+dataWords[i]); 
     console.log( textAreaList[i].attr('data-index'));
     //console.log(textArea.attr('data-index'));
@@ -69,10 +65,8 @@ function savaInfo(event){
         if(currentHour == checkIfPresent ){//check with user if they have enought time to schedule a meeting
             if(!confirm("Are you sure you want to Schedule a task with an hour or less left?")){return};  
         }
-        
         // console.log('hit');
         //grab button id and value and send it to local storage
-
         if(textareaId === undefined && string === undefined){//when they click the icon send them one branch up to get the values
             //console.log(string, textareaId);
             string = $(event.target.parentElement.parentElement.children[1]).val();
@@ -82,16 +76,24 @@ function savaInfo(event){
         if(string == ""){//check if user is saving anything
             return;
         }
-        
-        textAreaValue.push({textareaId:textareaId, savedText:string});
-        console.log('second:' + textAreaValue);
-        localStorage.setItem("textValue", JSON.stringify(textAreaValue));
+        //call function to save data to local storage
+        setData(string, textareaId);   
         //console.log(textAreaValue);
+}
+//set data to JSON
+function setData(string, iD){
+    if(localStorage.getItem('textValue') !== null) {
+        textAreaValue = JSON.parse(localStorage.getItem("textValue"));
+        console.log(textAreaValue);
+    }
+    textAreaValue.push({textareaId:iD, savedText:string});
+    //console.log('second:' + textAreaValue);
+    localStorage.setItem("textValue", JSON.stringify(textAreaValue));
 }
 
 function renderData(){
     //this function render the data back to the browser that once store during session 
-    //by getting the data and storing the data on a array after 
+    //by getting the data from Local storage and setting the value to an array after 
     //loops around finds matching text box by using queryselector and inputs the data 
     var arrayJSON = JSON.parse(localStorage.getItem("textValue"));
     console.log('JSON: ' + arrayJSON);
