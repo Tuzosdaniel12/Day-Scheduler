@@ -72,7 +72,6 @@ function savaInfo(event){
         if(textareaId === undefined && string === undefined){//when they click the icon send them one branch up to get the values
             //console.log(string, textareaId);
             string = $(event.target).parent().parent().children().eq(1).val();
-            console.log(string);
             textareaId = $(event.target).parent().parent().children().eq(1).attr('id');
             ///console.log(string, textareaId);
         }
