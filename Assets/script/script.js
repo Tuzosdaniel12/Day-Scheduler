@@ -100,7 +100,7 @@ function renderData(){
     if (!arrayJSON) {
         return;//return iff JSON array is empty
     }
-    for(var i = 0; i < arrayJSON.length;i++){
+    for(var i = 0; i < arrayJSON.length;i++){//I don't know how I thought of this, but Im glad i did make me proud
         $('#'+arrayJSON[i].textareaId).text(arrayJSON[i].savedText);//target text area by id
     }               
 }
