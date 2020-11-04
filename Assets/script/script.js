@@ -57,8 +57,10 @@ for(var i =0; i < hoursList.length; i++){
 function savaInfo(event){
         event.preventDefault();
         event.stopPropagation();
-        var string = $(event.target.parentElement.children[1]).val();
-        var textareaId = $(event.target.parentElement.children[1]).attr('id');
+        //var string = $(event.target.parentElement.children[1]).val();
+        //console.log(string);
+        var string = $(event.target).parent().children().eq(1).val();
+        var textareaId = $(event.target).parent().children().eq(1).attr('id');
         var currentHour = parseInt(moment().format("kk"));
         var checkIfPresent = parseInt($(event.target).attr('data-hour'));
 
@@ -69,8 +71,9 @@ function savaInfo(event){
         //grab button id and value and send it to local storage
         if(textareaId === undefined && string === undefined){//when they click the icon send them one branch up to get the values
             //console.log(string, textareaId);
-            string = $(event.target.parentElement.parentElement.children[1]).val();
-            textareaId = $(event.target.parentElement.parentElement.children[1]).attr('id');
+            string = $(event.target).parent().parent().children().eq(1).val();
+            console.log(string);
+            textareaId = $(event.target).parent().parent().children().eq(1).attr('id');
             ///console.log(string, textareaId);
         }
         if(string == ""){//check if user is saving anything
