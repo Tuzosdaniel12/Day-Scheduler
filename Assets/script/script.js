@@ -51,9 +51,10 @@ for(var i =0; i < hoursList.length; i++){
 function savaInfo(event){
         event.preventDefault();
         //get value of text and id to be store later
-        var string = $(event.target).parent().children().eq(1).val();
-        var textareaId = $(event.target).parent().children().eq(1).attr('id');
-
+        var string = $(this).parent().children().eq(1).val();
+        var textareaId = $(this).parent().children().eq(1).attr('id');
+        //console.log(event.target);
+        //console.log(this);
         // var currentHour = formatTime();
         var checkIfPresent = parseInt($(event.target).attr('data-hour'));
 
@@ -61,17 +62,7 @@ function savaInfo(event){
         if(currentHour() == checkIfPresent ){
             if(!confirm("Are you sure you want to Schedule a task with an hour or less left?")){return};  
         }
-
-        //if they hit icon travel up from icon and id and value 
-        if(textareaId === undefined && string === undefined){
-
-            string = $(event.target).parent().parent().children().eq(1).val();
-            textareaId = $(event.target).parent().parent().children().eq(1).attr('id');   
-
-        }
-
-        //check if user is saving anything, I could do this on start of function 
-        //but need to check that is no empty because they hit the icon
+        //make sure user saves something
         if(string == ""){
             return;
         }
