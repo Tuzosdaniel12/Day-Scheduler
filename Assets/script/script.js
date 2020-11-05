@@ -95,7 +95,7 @@ function setData(string, iD){
 function renderData(){
     //this function render the data back to the browser that once store during session 
     //by getting the data from Local storage and setting the value to an array after 
-    //loops around finds matching text box by using queryselector and inputs the data 
+    //loops around finds matching text box by using query selector and inputs the data 
     var arrayJSON = getJsonData();
     //console.log('JSON: ' + arrayJSON);
     if (!arrayJSON) {
@@ -110,10 +110,8 @@ function checkTime(){
     for(var i = 0; i < hoursList.length; i++){
         //var currentHour = currentHour();
         var textAreaHour = parseInt(textAreaList[i].attr('data-index'));
-        //console.log("CURRENT HOUR "+currentHour);
-        //console.log("textAreaHour "+textAreaHour);
-        //if (currentHour == 24){currentHour = 0;}//had to add this because when is 12am it formats as 24 I thought it would had been 00;
-        if(textAreaHour < currentHour()){//check if hour is less then chage class to past,and disable textArea
+
+        if(textAreaHour < currentHour()){//check if hour is less then change class to past,and disable textArea
             trueFunction(textAreaList[i], 'past');
         }
         else if(textAreaHour == currentHour()){//check if hour is the same and change class to pressent and disable text area
@@ -148,4 +146,4 @@ function currentHour(){
 createElements();
 checkTime();
 renderData();
-timeBLock.on('click', '.saveBtn', savaInfo);//delagate funtion for all save buttons
+timeBLock.on('click', '.saveBtn', savaInfo);//delegate function for all save buttons
