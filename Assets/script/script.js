@@ -55,7 +55,7 @@ for(var i =0; i < hoursList.length; i++){
 
 function savaInfo(event){
         event.preventDefault();
-        event.stopPropagation();
+        //event.stopPropagation();
         //var string = $(event.target.parentElement.children[1]).val();
         //console.log(string);
         var string = $(event.target).parent().children().eq(1).val();
@@ -79,7 +79,7 @@ function savaInfo(event){
         }
         //call function to save data to local storage
         setData(string, textareaId);   
-        //console.log(textAreaValue);
+        console.log(textareaId, string);
 }
 //set data to JSON
 function setData(string, iD){
