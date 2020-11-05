@@ -45,7 +45,7 @@ for(var i =0; i < hoursList.length; i++){
     //append all children
     row.append(hourDiv, textArea, saveBtn);
     saveBtn.append(icon);
-    //create this array so later i can target each text area accoring to time
+    //create this array so later i can target each text area according to time
     textAreaList[i] = $("#"+dataWords[i]); 
     //console.log( textAreaList[i].attr('data-index'));
     //console.log(textArea.attr('data-index'));
@@ -63,7 +63,7 @@ function savaInfo(event){
         // var currentHour = formatTime();
         var checkIfPresent = parseInt($(event.target).attr('data-hour'));
 
-        if(currentHour() == checkIfPresent ){//check with user if they have enought time to schedule a meeting
+        if(currentHour() == checkIfPresent ){//check with user if they have enough time to schedule a meeting
             if(!confirm("Are you sure you want to Schedule a task with an hour or less left?")){return};  
         }
         // console.log('hit');
