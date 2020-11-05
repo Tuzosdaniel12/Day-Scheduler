@@ -24,8 +24,10 @@ for(var i =0; i < hoursList.length; i++){
     // console.log(hoursList);
     row = $('<div>').addClass('row').attr('data-index',i);//create each row
     timeBLock.append(row);//append o time block
+
     //row.attr('data-index', hoursList[i]);
     //console.log(row.attr('data-index'));
+
     hourDiv = $('<div>').addClass('col-2 col-md-1 hour');
     textArea = $('<textarea>').addClass('col-8 col-md-10 description').attr('id',dataWords[i]);
     saveBtn = $('<button>').addClass('col-2 col-md-1 saveBtn').attr('data-index', i);
@@ -47,6 +49,7 @@ for(var i =0; i < hoursList.length; i++){
     saveBtn.append(icon);
     //create this array so later i can target each text area according to time
     textAreaList[i] = $("#"+dataWords[i]); 
+    
     //console.log( textAreaList[i].attr('data-index'));
     //console.log(textArea.attr('data-index'));
     //console.log(saveBtn);
@@ -58,6 +61,7 @@ function savaInfo(event){
         //event.stopPropagation();
         //var string = $(event.target.parentElement.children[1]).val();
         //console.log(string);
+        //took out the if event.target.matches
         var string = $(event.target).parent().children().eq(1).val();
         var textareaId = $(event.target).parent().children().eq(1).attr('id');
         // var currentHour = formatTime();
@@ -81,6 +85,7 @@ function savaInfo(event){
         setData(string, textareaId);   
         console.log(textareaId, string);
 }
+
 //set data to JSON
 function setData(string, iD){
     if(localStorage.getItem('textValue') !== null) {
@@ -122,6 +127,7 @@ function checkTime(){
         }
     }
 }
+
 ///set text area and sibling button to able
 function falseFunction(textArea, className){
     textArea.addClass(className);
@@ -135,10 +141,12 @@ function trueFunction(textArea, className){
     textArea.prop('disabled', true);
     textArea.siblings().eq(1).prop('disabled', true);
 }
+
 ///gets Json data 
 function getJsonData(){
     return JSON.parse(localStorage.getItem("textValue"));
-}
+} 
+
 //sets time to format 
 function currentHour(){
     return parseInt(moment().format("H"));
