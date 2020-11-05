@@ -63,10 +63,10 @@ function savaInfo(event){
         }
 
         //if they hit icon travel up from icon and id and value 
-        if(textareaId === undefined && string === undefined){s
+        if(textareaId === undefined && string === undefined){
 
             string = $(event.target).parent().parent().children().eq(1).val();
-            textareaId = $(event.target).parent().parent().children().eq(1).attr('id');
+            textareaId = $(event.target).parent().parent().children().eq(1).attr('id');   
 
         }
 
@@ -77,7 +77,7 @@ function savaInfo(event){
         }
 
         //call function to save data to local storage
-        setData(string, textareaId);   
+        setData(string, textareaId);  
 }
 
 //set data to JSON
