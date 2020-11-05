@@ -82,12 +82,15 @@ function savaInfo(event){
 
 //set data to JSON
 function setData(string, iD){
+    //check if text value  is not empty
     if(localStorage.getItem('textValue') !== null) {
         textAreaValue = getJsonData();
     }
 
+    //push new data after getting textValue from local storage
     textAreaValue.push({textareaId:iD, savedText:string});
 
+    //set data to JSON
     localStorage.setItem("textValue", JSON.stringify(textAreaValue));
 }
 
