@@ -60,10 +60,10 @@ function savaInfo(event){
         //console.log(string);
         var string = $(event.target).parent().children().eq(1).val();
         var textareaId = $(event.target).parent().children().eq(1).attr('id');
-        var currentHour = formatTime();
+        // var currentHour = formatTime();
         var checkIfPresent = parseInt($(event.target).attr('data-hour'));
 
-        if(currentHour == checkIfPresent ){//check with user if they have enought time to schedule a meeting
+        if(currentHour() == checkIfPresent ){//check with user if they have enought time to schedule a meeting
             if(!confirm("Are you sure you want to Schedule a task with an hour or less left?")){return};  
         }
         // console.log('hit');
@@ -108,18 +108,18 @@ function renderData(){
 
 function checkTime(){
     for(var i = 0; i < hoursList.length; i++){
-        var currentHour = formatTime();
+        //var currentHour = currentHour();
         var textAreaHour = parseInt(textAreaList[i].attr('data-index'));
         //console.log("CURRENT HOUR "+currentHour);
         //console.log("textAreaHour "+textAreaHour);
-        if (currentHour == 24){currentHour = 0;}//had to add this because when is 12am it formats as 24 I thought it would had been 00;
-        if(textAreaHour < currentHour){//check if hour is less then chage class to past,and disable textArea
+        //if (currentHour == 24){currentHour = 0;}//had to add this because when is 12am it formats as 24 I thought it would had been 00;
+        if(textAreaHour < currentHour()){//check if hour is less then chage class to past,and disable textArea
             trueFunction(textAreaList[i], 'past');
         }
-        else if(textAreaHour == currentHour){//check if hour is the same and change class to pressent and disable text area
+        else if(textAreaHour == currentHour()){//check if hour is the same and change class to pressent and disable text area
             falseFunction(textAreaList[i], 'present');
         }
-        else if(textAreaHour > currentHour){//check if hour is greater then current hour thenn change class to futureand make texarea avaliable
+        else if(textAreaHour > currentHour()){//check if hour is greater then current hour thenn change class to futureand make texarea avaliable
             falseFunction(textAreaList[i], 'future');
         }
     }
@@ -142,8 +142,8 @@ function getJsonData(){
     return JSON.parse(localStorage.getItem("textValue"));
 }
 //sets time to format 
-function formatTime(){
-    return parseInt(moment().format("kk"));
+function currentHour(){
+    return parseInt(moment().format("H"));
 }
 createElements();
 checkTime();
