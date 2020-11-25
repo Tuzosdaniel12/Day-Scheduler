@@ -1,25 +1,27 @@
 //create elements variables
-var row;
-var hourDiv;
-var textArea;
-var saveBtn;
-var icon;
-var timeBLock = $('.time-block');
-var currentDayEl =$('#currentDay');
+let row;
+let hourDiv;
+let textArea;
+let saveBtn;
+let icon;
+const timeBLock = $('.time-block');
+const currentDayEl =$('#currentDay');
 
-var hoursList = [9,10,11,12,1,2,3,4,5];
-var dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
-var currentDay= moment();
-var armyTime = 9;
-var textAreaList = [];
-var textAreaValue = [];
+
+const currentDay= moment();
+
+let textAreaList = [];
+let textAreaValue = [];
 
 //display current day in jumbotron
 currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
 
 //this function creates, elements for each row in the schedule 
-function createElements(){
-for(var i =0; i < hoursList.length; i++){
+const createElements = () =>{
+    let armyTime = 9;
+    const hoursList = [9,10,11,12,1,2,3,4,5];
+    const dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
+for(let i =0; i < hoursList.length; i++){
 
     row = $('<div>').addClass('row').attr('data-index',i);//create each row
 
@@ -48,15 +50,15 @@ for(var i =0; i < hoursList.length; i++){
     }
 }
 
-function savaInfo(event){
+function savaInfo  (event){
         event.preventDefault();
         //get value of text and id to be store later
-        var string = $(this).parent().children().eq(1).val();
-        var textareaId = $(this).parent().children().eq(1).attr('id');
+        const string = $(this).parent().children().eq(1).val();
+        const textareaId = $(this).parent().children().eq(1).attr('id');
         //console.log(event.target);
         //console.log(this);
         // var currentHour = formatTime();
-        var checkIfPresent = parseInt($(event.target).attr('data-hour'));
+        const checkIfPresent = parseInt($(event.target).attr('data-hour'));
 
         //check with user if they have enough time to schedule a meeting
         if(currentHour() == checkIfPresent ){
@@ -72,7 +74,7 @@ function savaInfo(event){
 }
 
 //set data to JSON
-function setData(string, iD){
+setData = (string, iD) =>{
     //check if text value  is not empty
     if(localStorage.getItem('textValue') !== null) {
         textAreaValue = getJsonData();
@@ -85,24 +87,25 @@ function setData(string, iD){
     localStorage.setItem("textValue", JSON.stringify(textAreaValue));
 }
 
-function renderData(){
+renderData = () =>{
     //this function render the data back to the browser 
     //by finding matching id of text area and store key then I store the data in to the textarea
-    var arrayJSON = getJsonData();
+    const arrayJSON = getJsonData();
 
     if (!arrayJSON) {
         return;//return iff JSON array is empty
     }
-    for(var i = 0; i < arrayJSON.length;i++){//I don't know how I thought of this, but Im glad i did makes me proud
+    for(let i = 0; i < arrayJSON.length;i++){//I don't know how I thought of this, but Im glad i did makes me proud
         $('#'+arrayJSON[i].textareaId).text(arrayJSON[i].savedText);//target text area by id
     }               
 }
 
 ///set style to text area according to time
-function checkTime(){
-    for(var i = 0; i < hoursList.length; i++){
+checkTime = () =>{
+    const hoursList = [9,10,11,12,1,2,3,4,5];
+    for(let i = 0; i < hoursList.length; i++){
         //var currentHour = currentHour();
-        var textAreaHour = parseInt(textAreaList[i].attr('data-index'));
+        const textAreaHour = parseInt(textAreaList[i].attr('data-index'));
 
         if(textAreaHour < currentHour()){//check if hour is less then change class to past,and disable textArea
             trueFunction(textAreaList[i], 'past');
@@ -113,35 +116,33 @@ function checkTime(){
         else if(textAreaHour > currentHour()){//check if hour is greater then current hour then change class to future and make textarea available
             falseFunction(textAreaList[i], 'future');
         }
+        if(currentHour() >= 18){localStorage.removeItem("textValue");}
     }
 }
 
 ///set text area and sibling button to able
-function falseFunction(textArea, className){
+falseFunction = (textArea, className) =>{
     textArea.addClass(className);
     textArea.prop('disabled', false);
     textArea.siblings().eq(1).prop('disabled', false);
 }
 
 ///set text area and sibling button to disabled
-function trueFunction(textArea, className){
+trueFunction = (textArea, className) =>{
     textArea.addClass(className);
     textArea.prop('disabled', true);
     textArea.siblings().eq(1).prop('disabled', true);
 }
 
 ///gets Json data 
-function getJsonData(){
-    return JSON.parse(localStorage.getItem("textValue"));
-} 
+getJsonData = () => JSON.parse( localStorage.getItem( "textValue" ) ); 
 
 //sets time to int format to check on if statements
-function currentHour(){
-    return parseInt(moment().format("H"));
-}
+currentHour = () => parseInt(moment().format("H"));
+
 
 //formats the the text from Am to Pm
-function formatTime(formatAmPm, num){
+formatTime = (formatAmPm, num) =>{
     if(num < 3){
         return formatAmPm+'AM';
     }
