@@ -17,7 +17,7 @@ let textAreaValue = [];
 currentDayEl.text(currentDay.format("dddd, MMMM Do YYYY"));
 
 //this function creates, elements for each row in the schedule 
-const createElements = () =>{
+createElements = () =>{
     let armyTime = 9;
     const hoursList = [9,10,11,12,1,2,3,4,5];
     const dataWords= ["zero","one","two","three","four","five","six","seven","eight","nine"];
